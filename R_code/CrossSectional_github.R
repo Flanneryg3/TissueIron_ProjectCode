@@ -33,8 +33,8 @@ library(ggplot2)
 ###########################################################################################################
 # data import
 
-data <- read.csv("/path/data_w5.csv")
-data_noADHD <- read.csv("/path/data_w5_noADHD.csv")
+data <- read.csv("./data_w5.csv")
+data_noADHD <- read.csv("./data_w5_noADHD.csv")
 
 #Centering stuff! 
 data$age_grandmc <- data$age - mean(data$age)
@@ -85,14 +85,38 @@ summary(m9 <- glm(formula = dprime_all ~ age_grandmc + meanFD_grandmc + SB_BG,
 
 ####################################################################################################################
 # Any boost behavior  
-summary(m10 <- glm(formula = dprime_any_NB ~ age_grandmc + meanFD_grandmc + AnyBoost_BG,
+summary(m10 <- glm(formula = dprime_any_NB ~ age_grandmc + AnyBoost_BG,
                   family = gaussian, data = data))
 
-summary(m11 <- glm(formula = dprime_any_NB ~ age_grandmc + meanFD_grandmc + BB_BG,
+summary(m11 <- glm(formula = dprime_any_NB ~ age_grandmc + BB_BG,
                   family = gaussian, data = data))
 
-summary(m12 <- glm(formula = dprime_any_NB ~ age_grandmc + meanFD_grandmc + SB_BG,
+summary(m12 <- glm(formula = dprime_any_NB ~ age_grandmc + SB_BG,
                   family = gaussian, data = data))
+###################################################################
+
+####################################################################################################################
+# Any boost behavior and tissue iron at final time point
+summary(m13 <- glm(formula = Put ~ age_grandmc + meanFD_grandmc + dprime_any_NB,
+                   family = gaussian, data = data))
+
+summary(m13 <- glm(formula = Put ~ age_grandmc + meanFD_grandmc + dprime_BB_NB,
+                   family = gaussian, data = data))
+
+summary(m13 <- glm(formula = Put ~ age_grandmc + meanFD_grandmc + dprime_SB_NB,
+                   family = gaussian, data = data))
+
+summary(m14 <- glm(formula = Nac ~ age_grandmc + meanFD_grandmc + dprime_any_NB,
+                   family = gaussian, data = data))
+
+summary(m15 <- glm(formula = Caud ~ age_grandmc + meanFD_grandmc+ dprime_any_NB,
+                   family = gaussian, data = data))
+
+summary(m16 <- glm(formula = GP ~ age_grandmc + meanFD_grandmc + dprime_any_NB,
+                   family = gaussian, data = data))
+
+summary(m17 <- glm(formula = BG ~ age_grandmc + meanFD_grandmc + dprime_any_NB,
+                   family = gaussian, data = data))
 ###################################################################
 ######################################################################################################################################
 
@@ -151,7 +175,7 @@ p + set_theme(geom.linetype=1) + theme_classic() + theme(
 ##################################################################################################################
 ###############################
 
-data <- read.csv("/path/data_w5.csv")
+data <- read.csv("./data_w5.csv")
 #data <- read.csv("/Users/jessicaflannery/Desktop/planets/R_stats/data/data_w5_noADHD.csv")
 
 #Centering stuff! 
