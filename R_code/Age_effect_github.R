@@ -59,7 +59,7 @@ data_long$sex <- factor(data_long$sex)
 ############################################################################################################
 # #generalized additive mixed model is a generalized linear mixed model 
 ##########################################################################################################
-dev <- gamm4(nT2w ~ meanFD_grandmc + sex + roi + s(age_grandmc, k=4, fx=T), random=~(age_grandmc|Subj) + (roi|Subj) + (meanFD_grandmc|Subj), family=gaussian(), data=data_long,
+dev <- gamm4(nT2w ~ meanFD_grandmc + sex + roi + s(age_grandmc, k=4, fx=T), random=~(1 + age_grandmc + roi || Subj), family=gaussian(), data=data_long,
                 REML=TRUE, control=NULL)
 
 summary(dev$mer)
@@ -69,7 +69,7 @@ plot.gam(dev$gam, pages=1, seWithMean=TRUE, ylim=c(0.02,-0.06))
 
 plot_smooth(dev$gam, view="age", rm.ranef=FALSE, rug=FALSE, col="blue", ylab='nT2*w', ylim=c(1.25,1.16), lwd=2.5)
 
-dev2 <- gamm4(nT2w ~ meanFD + sex + roi + s(age, by = roi, k=4, fx=T), random=~(age|Subj), family=gaussian(), data=data_long,
+dev2 <- gamm4(nT2w ~ meanFD + sex + roi + s(age, by = roi, k=4, fx=T), random=~(age||Subj), family=gaussian(), data=data_long,
              REML=TRUE, control=NULL)
 
 p3 <- plot_smooth(dev2$gam, view="age", cond=list(roi="0"),
@@ -118,7 +118,7 @@ theme_set(theme_bw())
 ################################################################################################################
 ##BG
 # create plot of GAM models #
-BG_gam <- gamm4(BG ~ meanFD + sex + s(age, k=4, fx=T), random=~(age|Subj), family=gaussian(), data=data,
+BG_gam <- gamm4(BG ~ meanFD + sex + s(age, k=4, fx=T), random=~(age||Subj), family=gaussian(), data=data,
                   REML=TRUE, control=NULL)
 
 summary(BG_gam$mer)

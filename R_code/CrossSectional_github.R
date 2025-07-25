@@ -20,15 +20,15 @@ library(data.table)
 library(misty)
 library(performance)
 library(foreign)
-library("boot")
-library("pscl")
-library("foreign")
-library("MASS")
-library("RColorBrewer")
-library("AER")
-library("lattice")
-library("knitr")
-library("sjPlot")
+library(boot)
+library(pscl)
+library(foreign)
+library(MASS)
+library(RColorBrewer)
+library(AER)
+library(lattice)
+library(knitr)
+library(sjPlot)
 library(ggplot2)
 ###########################################################################################################
 # data import
@@ -100,12 +100,6 @@ summary(m12 <- glm(formula = dprime_any_NB ~ age_grandmc + SB_BG,
 summary(m13 <- glm(formula = Put ~ age_grandmc + meanFD_grandmc + dprime_any_NB,
                    family = gaussian, data = data))
 
-summary(m13 <- glm(formula = Put ~ age_grandmc + meanFD_grandmc + dprime_BB_NB,
-                   family = gaussian, data = data))
-
-summary(m13 <- glm(formula = Put ~ age_grandmc + meanFD_grandmc + dprime_SB_NB,
-                   family = gaussian, data = data))
-
 summary(m14 <- glm(formula = Nac ~ age_grandmc + meanFD_grandmc + dprime_any_NB,
                    family = gaussian, data = data))
 
@@ -118,6 +112,7 @@ summary(m16 <- glm(formula = GP ~ age_grandmc + meanFD_grandmc + dprime_any_NB,
 summary(m17 <- glm(formula = BG ~ age_grandmc + meanFD_grandmc + dprime_any_NB,
                    family = gaussian, data = data))
 ###################################################################
+# plot brain boost and behavior boost relationships at the final timepoint
 ######################################################################################################################################
 
 p <- plot_model(m10, type="pred", terms = c("AnyBoost_BG"), auto.label = FALSE, 
@@ -239,41 +234,6 @@ p + set_theme(geom.linetype=2) + theme_classic() + scale_y_reverse() + theme(
             axis.text = element_text(size = 15, colour='black')) + theme(
               axis.title.y = element_text(size=15, colour = 'black', face='bold')) + theme(
                 axis.title.x = element_text(size=15, colour = 'black', face='bold'))
-
-######################################################################################################################################
-###################################################################
-#BOOST BOLD and substance use at wave 5 
-##################################################################################################################
-
-# drug_any_W5 (highest amount of any drug in the past year)
-# drug_ever_W5
-# max_drug (highest amount of any drug in a year)
-# drug_ever (ever used substances yes/no)
-#############################################################################################
-summary(SUm1 <- glm(formula = AnyBoost_BG ~ age_grandmc + sex + drug_ever,
-                    family = gaussian, data = data))
-
-summary(SUm2 <- glm(formula = BB_BG ~ age_grandmc + sex + drug_ever,
-                    family = gaussian, data = data))
-
-summary(SUm3 <- glm(formula = SB_BG ~ age_grandmc + sex + drug_ever,
-                    family = gaussian, data = data))
-
-#############################################################################################
-summary(SUm2 <- glm(formula = dprime_any_NB ~ age_grandmc + sex + drug_ever_W5,
-                    family = gaussian, data = data))
-
-summary(SUm3 <- glm(formula = dprime_BB_NB ~ age_grandmc + sex + drug_ever_W5,
-                    family = gaussian, data = data))
-
-summary(SUm4 <- glm(formula = dprime_SB_NB ~ age_grandmc + sex + drug_ever_W5,
-                    family = gaussian, data = data))
-
-#############################################################################################
-#############################################################################################
-summary(SUm6 <- glm(formula = BG ~ age_grandmc + meanFD_grandmc + sex + drug_ever_W5,
-                    family = gaussian, data = data))
-
 
 #############################################################################################
 #############################################################################################
